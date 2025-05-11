@@ -11,14 +11,18 @@ config_version=5
 [application]
 
 config/name="Defensa del Paso Estrategico"
+run/main_scene="uid://bsjeyjc2gysm4"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=2304
-window/size/viewport_height=1296
-window/stretch/aspect="expand"
+window/size/viewport_width=3584
+window/size/viewport_height=2048
+window/size/mode=2
+window/size/window_width_override=1194
+window/size/window_height_override=682
+window/stretch/mode="viewport"
 
 [rendering]
 
