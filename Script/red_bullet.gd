@@ -11,7 +11,7 @@ func _ready():
 	set_process(true)
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if target == null or not is_instance_valid(target):
 		queue_free()
 		return

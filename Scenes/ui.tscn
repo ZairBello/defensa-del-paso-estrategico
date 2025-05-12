@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dokmeib7wg4i2"]
+[gd_scene load_steps=5 format=3 uid="uid://dokmeib7wg4i2"]
 
 [ext_resource type="PackedScene" uid="uid://dyyjx030v1wj6" path="res://Scenes/tower_greens.tscn" id="1_jxero"]
+[ext_resource type="PackedScene" uid="uid://dudt2vdbhefnv" path="res://Scenes/tower_Red.tscn" id="2_qdvrb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wviqb"]
 bg_color = Color(1, 1, 1, 1)
@@ -17,20 +18,21 @@ content_margin_top = 59.0
 
 [node name="UI" type="CanvasLayer"]
 
-[node name="Panel" type="Panel" parent="."]
-custom_minimum_size = Vector2(650, 800)
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -650.0
-offset_top = -500.0
-grow_horizontal = 0
-grow_vertical = 0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="MarginContainer"]
+custom_minimum_size = Vector2(650, 600)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
 theme_override_styles/panel = SubResource("StyleBoxFlat_wviqb")
 
-[node name="Title" type="Label" parent="Panel"]
+[node name="Title" type="Label" parent="MarginContainer/Panel"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -45,7 +47,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_qdvrb")
 text = "Towers"
 horizontal_alignment = 1
 
-[node name="ContainerTowers" type="FlowContainer" parent="Panel"]
+[node name="ContainerTowers" type="FlowContainer" parent="MarginContainer/Panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -53,7 +55,7 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -258.0
-offset_top = -172.0
+offset_top = -52.0
 offset_right = 254.0
 offset_bottom = 238.0
 grow_horizontal = 2
@@ -62,18 +64,10 @@ theme_override_constants/h_separation = 35
 theme_override_constants/v_separation = 10
 alignment = 1
 
-[node name="Tower Greens" parent="Panel/ContainerTowers" instance=ExtResource("1_jxero")]
+[node name="Tower Greens" parent="MarginContainer/Panel/ContainerTowers" instance=ExtResource("1_jxero")]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 
-[node name="Tower Greens2" parent="Panel/ContainerTowers" instance=ExtResource("1_jxero")]
-custom_minimum_size = Vector2(200, 200)
-layout_mode = 2
-
-[node name="Tower Greens3" parent="Panel/ContainerTowers" instance=ExtResource("1_jxero")]
-custom_minimum_size = Vector2(200, 200)
-layout_mode = 2
-
-[node name="Tower Greens4" parent="Panel/ContainerTowers" instance=ExtResource("1_jxero")]
+[node name="Tower Red" parent="MarginContainer/Panel/ContainerTowers" instance=ExtResource("2_qdvrb")]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2

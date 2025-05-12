@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bicjmt5dw8kvk"]
+[gd_scene load_steps=7 format=3 uid="uid://defiuf2367qc1"]
 
-[ext_resource type="Script" uid="uid://dpbj34f1fb3d" path="res://Script/red_bullet_tower.gd" id="1_oq40o"]
-[ext_resource type="Texture2D" uid="uid://bwlh2kdep642f" path="res://Assets/Default size/towerDefense_tile249.png" id="2_oq40o"]
+[ext_resource type="Script" uid="uid://dpbj34f1fb3d" path="res://Script/red_bullet_tower.gd" id="1_up0wt"]
+[ext_resource type="Texture2D" uid="uid://db5cio0cyl772" path="res://Assets/Default size/towerDefense_tile250.png" id="2_8ivsn"]
+[ext_resource type="PackedScene" uid="uid://cyp1a2w4m123u" path="res://Scenes/red_bullet_big.tscn" id="2_ecmvo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_85gl3"]
 size = Vector2(94, 89)
@@ -17,13 +18,14 @@ corner_radius_bottom_right = 1000
 corner_radius_bottom_left = 1000
 
 [node name="RedBulletTower" type="StaticBody2D"]
-script = ExtResource("1_oq40o")
-shootCooldown = 1.0
+script = ExtResource("1_up0wt")
+BulletScene = ExtResource("2_ecmvo")
+bulletDamage = 10
 
 [node name="TowerDefenseTile250" type="Sprite2D" parent="."]
 rotation = 1.5708
 scale = Vector2(2, 2)
-texture = ExtResource("2_oq40o")
+texture = ExtResource("2_8ivsn")
 
 [node name="Ain" type="Marker2D" parent="TowerDefenseTile250"]
 position = Vector2(0, -32)

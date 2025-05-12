@@ -1,11 +1,11 @@
 extends StaticBody2D
 
 # --- CONFIGURACIÓN ---
-var BulletScene = preload("res://Scenes/red_bullet.tscn")
-var bulletDamage := 5
+@export var BulletScene = preload("res://Scenes/red_bullet.tscn")
+@export var bulletDamage := 5
+@export var shootCooldown := 2.0  # Tiempo entre disparos
 var rotationSpeed := 5.0  # Velocidad de rotación de la torreta
-var shootCooldown := 1.0  # Tiempo entre disparos
-var shootDelay := 0.1     # Retardo tras girar antes de disparar
+var shootDelay := 0.8    # Retardo tras girar antes de disparar
 
 # --- ESTADO INTERNO ---
 var canShoot := true
@@ -20,6 +20,16 @@ func _ready():
 
 func _process(delta):
 	_rotate_towards_target(delta)
+	if canShoot:
+		var targets = _get_valid_soldier_targets()
+		var strongest = _get_strongest_target(targets)
+		
+		if strongest:
+			currentTarget = strongest
+			pendingTarget = strongest
+			canShoot = false
+			$ShootTimer.start()
+			$DelayTimer.start()
 
 
 # --- INICIALIZACIÓN DE TIMERS ---
@@ -46,10 +56,18 @@ func _rotate_towards_target(delta):
 		var angle_to_target = (currentTarget.global_position - global_position).angle()
 		rotation = lerp_angle(rotation, angle_to_target, delta * rotationSpeed)
 
-
 # --- DETECCIÓN DE SOLDADOS EN RANGO ---
 func _on_tower_body_entered(body):
-	if "Soldier A" in body.name and canShoot:
+	var soldier: CharacterBody2D = null
+
+	if body is CharacterBody2D and body.name.contains("Soldier A"):
+		soldier = body
+	elif body is PathFollow2D and body.get_child_count() > 0:
+		var possible = body.get_child(0)
+		if possible.name.contains("Soldier A"):
+			soldier = possible
+
+	if soldier and canShoot:
 		var targets = _get_valid_soldier_targets()
 		var strongest = _get_strongest_target(targets)
 
@@ -63,7 +81,15 @@ func _on_tower_body_entered(body):
 
 func _get_valid_soldier_targets():
 	var overlapping = get_node("Tower").get_overlapping_bodies()
-	return overlapping.filter(func(target): return "Soldier" in target.name)
+	var valid_targets = []
+	for body in overlapping:
+		if body is CharacterBody2D and body.name.contains("Soldier"):
+			valid_targets.append(body)
+		elif body is PathFollow2D and body.get_child_count() > 0:
+			var child = body.get_child(0)
+			if child.name.contains("Soldier"):
+				valid_targets.append(child)
+	return valid_targets
 
 
 func _get_strongest_target(targets):
